@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         calendarPickerDialog = new CalendarPickerDialog.Builder(this)
+                .setStartDate(2016, 3, 21)
+                .setEndDate(2016, 3, 26)
                 .create();
 
         calendarPickerDialog.show();

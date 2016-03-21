@@ -3,11 +3,10 @@ package com.devs.shoki.caldendarpicker;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 
+import com.devs.shoki.caldendarpicker.calendar.CalendarDayParams;
 import com.devs.shoki.caldendarpicker.calendar.CalendarPickerParams;
 import com.devs.shoki.caldendarpicker.calendar.CalendarPickerView;
 import com.devs.shoki.caldendarpicker.listener.IPickerListener;
-
-import java.util.Date;
 
 /**
  * Created by shoki on 2016-03-18.
@@ -32,6 +31,7 @@ public class CalendarPickerDialog extends AlertDialog {
 
         public Builder(Context context) {
             this.context = context;
+            this.calendarPickerParams = new CalendarPickerParams();
         }
 
         public Builder setOnPickerListener(IPickerListener pickerListener) {
@@ -39,7 +39,21 @@ public class CalendarPickerDialog extends AlertDialog {
             return this;
         }
 
-        public Builder setStartDate(Date startDate) {
+        public Builder setStartDate(int year, int month, int day) {
+            CalendarDayParams dayParams = new CalendarDayParams();
+            dayParams.setYear(year);
+            dayParams.setMonth(month);
+            dayParams.setDay(day);
+            calendarPickerParams.setStartDate(dayParams);
+            return this;
+        }
+
+        public Builder setEndDate(int year, int month, int day) {
+            CalendarDayParams dayParams = new CalendarDayParams();
+            dayParams.setYear(year);
+            dayParams.setMonth(month);
+            dayParams.setDay(day);
+            calendarPickerParams.setEndDate(dayParams);
             return this;
         }
 

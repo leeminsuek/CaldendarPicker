@@ -5,13 +5,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.devs.shoki.caldendarpicker.calendar.CalendarCellParams;
+import com.devs.shoki.caldendarpicker.calendar.CalendarDayParams;
 import com.devs.shoki.caldendarpicker.calendar.day.CalendarCellView;
 import com.devs.shoki.caldendarpicker.calendar.week.CalendarWeekView;
+import com.devs.shoki.caldendarpicker.constants.Config;
 import com.devs.shoki.caldendarpicker.constants.Week;
 import com.devs.shoki.caldendarpicker.listener.IDayClickListener;
+import com.devs.shoki.caldendarpicker.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by shoki on 2016-03-18.
@@ -25,15 +29,16 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
 
     private List<Week> weekList = new ArrayList<>();
     private List<CalendarCellParams> paramsList = new ArrayList<>();
-
+    private Map<String, CalendarDayParams> selectParamsMap;
     private IDayClickListener iDayClickListener;
 
-    public CalendarGridAdapter(List<CalendarCellParams> cellParamses) {
+    public CalendarGridAdapter(List<CalendarCellParams> cellParamses, Map<String, CalendarDayParams> selectDayMap) {
         for(Week week : Week.values()){
             weekList.add(week);
         }
-
+        selectParamsMap = selectDayMap;
         paramsList = cellParamses;
+        setSelectedItem();
     }
 
     public void setOnDayClickListener(IDayClickListener listener) {
@@ -42,6 +47,24 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
 
     public void setData(List<CalendarCellParams> cellParamses) {
         paramsList = cellParamses;
+        setSelectedItem();
+    }
+
+    private void setSelectedItem() {
+        if(selectParamsMap.containsKey(Config.SELECT_START_DATE) && selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
+            CalendarDayParams day1 = selectParamsMap.get(Config.SELECT_START_DATE);
+            CalendarDayParams day2 = selectParamsMap.get(Config.SELECT_END_DATE);
+            for(int i = 0 ;i < paramsList.size() ; i ++) {
+                if(DateUtil.isDifferenceOfDay(day1, paramsList.get(i).getDayParams()) >= 0 &&
+                        (DateUtil.isDifferenceOfDay(day2, paramsList.get(i).getDayParams()) == -1 ||
+                                DateUtil.isDifferenceOfDay(day2, paramsList.get(i).getDayParams()) == 0 )) {
+                    paramsList.get(i).setSelected(true);
+                }
+                else {
+                    paramsList.get(i).setSelected(false);
+                }
+            }
+        }
     }
 
     @Override

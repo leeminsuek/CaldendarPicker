@@ -12,13 +12,16 @@ import android.widget.TextView;
 
 import com.devs.shoki.caldendarpicker.CalendarGridAdapter;
 import com.devs.shoki.caldendarpicker.R;
+import com.devs.shoki.caldendarpicker.constants.Config;
 import com.devs.shoki.caldendarpicker.constants.MonthState;
 import com.devs.shoki.caldendarpicker.listener.IDayClickListener;
 import com.devs.shoki.caldendarpicker.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by shoki on 2016-03-18.
@@ -29,9 +32,12 @@ public class CalendarPickerView extends RelativeLayout {
     private CalendarGridAdapter adapter;
     private List<CalendarCellParams> cellParamsList;
     private Calendar calendar;
-
+    private Map<String, CalendarDayParams> selectParamsMap;
+    private CalendarPickerParams params;
     public CalendarPickerView(Context context, CalendarPickerParams params) {
         super(context);
+
+        this.params = params;
 
         init();
     }
@@ -45,6 +51,16 @@ public class CalendarPickerView extends RelativeLayout {
 
         calendar = Calendar.getInstance();
         calendar.set(2016, 4-1, 0);
+
+        selectParamsMap = new HashMap<>();
+
+        if(params.getStartDate() != null) {
+            selectParamsMap.put(Config.SELECT_START_DATE, params.getStartDate());
+
+            if(params.getEndDate() != null) {
+                selectParamsMap.put(Config.SELECT_END_DATE, params.getEndDate());
+            }
+        }
 
         Button prevBtn = (Button) findViewById(R.id.picker_main_prev_btn);
         Button nextBtn = (Button) findViewById(R.id.picker_main_next_btn);
@@ -63,13 +79,49 @@ public class CalendarPickerView extends RelativeLayout {
     private void initRecyclerView() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 7, LinearLayoutManager.VERTICAL, false);
 
-        adapter = new CalendarGridAdapter(cellParamsList);
+        adapter = new CalendarGridAdapter(cellParamsList, selectParamsMap);
         adapter.setOnDayClickListener(new IDayClickListener() {
             @Override
             public void onDayClickListener(CalendarDayParams day, int position) {
                 Log.d("calendar", day.getYear() + "년" + day.getMonth() + "월" + day.getDay() + "일");
-                cellParamsList.get(position -7).setSelected(true);
-                adapter.notifyItemChanged(position);
+
+                if(selectParamsMap.containsKey(Config.SELECT_START_DATE)) {
+                    selectParamsMap.put(Config.SELECT_END_DATE, day);
+                }
+                else {
+                    selectParamsMap.put(Config.SELECT_START_DATE, day);
+                }
+
+                if(selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
+
+                    CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_START_DATE);
+                    CalendarDayParams endDay = selectParamsMap.get(Config.SELECT_END_DATE);
+                    boolean allCheck = false;
+                    for(int i = 0 ;i < cellParamsList.size() ; i ++) {
+                        if(DateUtil.isDifferenceOfDay(startDay, cellParamsList.get(i).getDayParams()) >= 0 &&
+                                (DateUtil.isDifferenceOfDay(endDay, cellParamsList.get(i).getDayParams()) == -1 ||
+                                DateUtil.isDifferenceOfDay(endDay, cellParamsList.get(i).getDayParams()) == 0 )) {
+                            cellParamsList.get(i).setSelected(true);
+                            allCheck = true;
+                        }
+                        else {
+                            cellParamsList.get(i).setSelected(false);
+                        }
+                    }
+
+                    if(!allCheck) {
+                        selectParamsMap.clear();
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                }
+                else {
+                    if(position -7 >= 0) {
+                        cellParamsList.get(position -7).setSelected(true);
+                        adapter.notifyItemChanged(position);
+                    }
+                }
             }
         });
 
