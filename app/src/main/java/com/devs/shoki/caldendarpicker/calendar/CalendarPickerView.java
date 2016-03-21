@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.devs.shoki.caldendarpicker.CalendarGridAdapter;
 import com.devs.shoki.caldendarpicker.R;
 import com.devs.shoki.caldendarpicker.constants.MonthState;
+import com.devs.shoki.caldendarpicker.listener.IDayClickListener;
 import com.devs.shoki.caldendarpicker.util.DateUtil;
 
 import java.util.ArrayList;
@@ -62,6 +64,14 @@ public class CalendarPickerView extends RelativeLayout {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 7, LinearLayoutManager.VERTICAL, false);
 
         adapter = new CalendarGridAdapter(cellParamsList);
+        adapter.setOnDayClickListener(new IDayClickListener() {
+            @Override
+            public void onDayClickListener(CalendarDayParams day, int position) {
+                Log.d("calendar", day.getYear() + "년" + day.getMonth() + "월" + day.getDay() + "일");
+                cellParamsList.get(position -7).setSelected(true);
+                adapter.notifyItemChanged(position);
+            }
+        });
 
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -98,23 +108,41 @@ public class CalendarPickerView extends RelativeLayout {
                     emptyStart++;
 
                     beforeParams.setMonthState(MonthState.PREV);
-                    beforeParams.setDay(Integer.parseInt(day));
+
+                    CalendarDayParams calendarDayParams = new CalendarDayParams();
+                    calendarDayParams.setDay(Integer.parseInt(day));
+                    calendarDayParams.setMonth(Integer.parseInt(beforeYearMonthBy.substring(4, 6)));
+                    calendarDayParams.setYear(Integer.parseInt(beforeYearMonthBy.substring(0, 4)));
+
+                    beforeParams.setDayParams(calendarDayParams);
                     cellParamsList.add(0, beforeParams);
                 }
             }
-
-            params.setDay(i);
+            CalendarDayParams calendarDayParams = new CalendarDayParams();
+            calendarDayParams.setDay(i);
+            calendarDayParams.setMonth(month);
+            calendarDayParams.setYear(year);
+            params.setDayParams(calendarDayParams);
             params.setMonthState(MonthState.NOW);
             cellParamsList.add(params);
         }
+
+        Calendar copy = (Calendar) calendar.clone();
+        copy.add(Calendar.MONTH, 2);
 
         int plusDayCnt = 7 * ((cellParamsList.size() / 7) + 1) - cellParamsList.size();
         for (int i = 1; i <= plusDayCnt; i ++) {
             CalendarCellParams params = new CalendarCellParams();
             params.setMonthState(MonthState.NEXT);
-            params.setDay(i);
+            CalendarDayParams calendarDayParams = new CalendarDayParams();
+            calendarDayParams.setDay(i);
+            calendarDayParams.setMonth(copy.get(Calendar.MONTH));
+            calendarDayParams.setYear(copy.get(Calendar.YEAR));
+            params.setDayParams(calendarDayParams);
             cellParamsList.add(params);
         }
+
+        copy.clear();
         setMonthTitle();
 
         adapter.setData(cellParamsList);

@@ -23,9 +23,16 @@ public class CalendarWeekView extends RelativeLayout {
         View.inflate(getContext(), R.layout.picker_week_cell, this);
     }
 
-    public void setTitle(Week week) {
+    public void setData(Week week) {
         TextView titleTxtv = (TextView) findViewById(R.id.picker_week_cell_title_txtv);
 
         titleTxtv.setText(week.week);
+
+        if(week.isWeekend) {
+            titleTxtv.setTextColor(getContext().getResources().getColor(R.color.weekendTextColor));
+        }
+        else {
+            titleTxtv.setTextColor(getContext().getResources().getColor(R.color.nowTextColor));
+        }
     }
 }

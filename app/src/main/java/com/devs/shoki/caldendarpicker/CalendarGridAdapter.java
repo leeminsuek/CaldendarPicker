@@ -8,6 +8,7 @@ import com.devs.shoki.caldendarpicker.calendar.CalendarCellParams;
 import com.devs.shoki.caldendarpicker.calendar.day.CalendarCellView;
 import com.devs.shoki.caldendarpicker.calendar.week.CalendarWeekView;
 import com.devs.shoki.caldendarpicker.constants.Week;
+import com.devs.shoki.caldendarpicker.listener.IDayClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
     private List<Week> weekList = new ArrayList<>();
     private List<CalendarCellParams> paramsList = new ArrayList<>();
 
-    private int width = 0;
+    private IDayClickListener iDayClickListener;
 
     public CalendarGridAdapter(List<CalendarCellParams> cellParamses) {
         for(Week week : Week.values()){
@@ -33,6 +34,10 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
         }
 
         paramsList = cellParamses;
+    }
+
+    public void setOnDayClickListener(IDayClickListener listener) {
+        iDayClickListener = listener;
     }
 
     public void setData(List<CalendarCellParams> cellParamses) {
@@ -47,14 +52,14 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
         if(viewType == VIEW_HEADER) {
             CalendarWeekView cell = new CalendarWeekView(parent.getContext());
             CalendarWeekViewHolder calendarWeekViewHolder = new CalendarWeekViewHolder(cell);
-            calendarWeekViewHolder.calendarWeekView.setLayoutParams(new ViewGroup.LayoutParams(size, ViewGroup.LayoutParams.WRAP_CONTENT));
+            calendarWeekViewHolder.calendarWeekView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             return calendarWeekViewHolder;
         }
         else {
 
             CalendarCellView cell = new CalendarCellView(parent.getContext());
             CalendarCellViewHolder calendarCellViewHolder = new CalendarCellViewHolder(cell);
-            calendarCellViewHolder.calendarCellView.setLayoutParams(new ViewGroup.LayoutParams(size, size));
+            calendarCellViewHolder.calendarCellView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, size));
             return calendarCellViewHolder;
         }
     }
@@ -63,12 +68,12 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
     public void onBindViewHolder(CalendarViewHolder holder, int position) {
         if(position >= 0 && position < HEADER_CELL_CNT) {
             CalendarWeekViewHolder calendarWeekViewHolder = (CalendarWeekViewHolder) holder;
-            calendarWeekViewHolder.calendarWeekView.setTitle(weekList.get(position));
+            calendarWeekViewHolder.calendarWeekView.setData(weekList.get(position));
         }
         else {
             CalendarCellParams params = paramsList.get(position- HEADER_CELL_CNT);
             CalendarCellViewHolder calendarCellViewHolder = (CalendarCellViewHolder) holder;
-            calendarCellViewHolder.calendarCellView.setTitle(String.valueOf(params.getDay()));
+            calendarCellViewHolder.calendarCellView.setParams(params);
         }
     }
 
@@ -117,6 +122,15 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
             super(itemView);
 
             calendarCellView = (CalendarCellView) itemView;
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(iDayClickListener != null) {
+                        iDayClickListener.onDayClickListener(calendarCellView.getParams().getDayParams(), getAdapterPosition());
+                    }
+                }
+            });
         }
     }
 }

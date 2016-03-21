@@ -2,12 +2,30 @@ package com.devs.shoki.caldendarpicker.calendar;
 
 public class CalendarCellParams {
 
+
     public CalendarCellParams() {
     }
 
-    private int day;
     private int monthState;
+    private CalendarDayParams dayParams;
+    private boolean selected = false;
 
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public CalendarDayParams getDayParams() {
+        return dayParams;
+    }
+
+    public void setDayParams(CalendarDayParams dayParams) {
+        this.dayParams = dayParams;
+    }
 
     public int getMonthState() {
         return monthState;
@@ -15,13 +33,5 @@ public class CalendarCellParams {
 
     public void setMonthState(int monthState) {
         this.monthState = monthState;
-    }
-
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
     }
 }

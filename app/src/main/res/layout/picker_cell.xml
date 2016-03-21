@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/picker_cell_background"
     android:background="#ffffff">
 
     <TextView
@@ -11,10 +12,4 @@
         android:text="23"
         android:layout_height="wrap_content" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:background="#354554"
-        android:layout_height="3dp">
-    </View>
 </RelativeLayout>
