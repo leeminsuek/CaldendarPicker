@@ -11,7 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.devs.shoki.caldendarpicker.CalendarGridAdapter;
+import com.devs.shoki.caldendarpicker.CalendarPickerDialog;
 import com.devs.shoki.caldendarpicker.R;
+import com.devs.shoki.caldendarpicker.constants.CalendarMode;
 import com.devs.shoki.caldendarpicker.constants.Config;
 import com.devs.shoki.caldendarpicker.constants.MonthState;
 import com.devs.shoki.caldendarpicker.listener.IDayClickListener;
@@ -29,23 +31,41 @@ import java.util.Map;
 public class CalendarPickerView extends RelativeLayout {
 
     private RecyclerView recyclerView;
+    private Button selectBtn;
+
     private CalendarGridAdapter adapter;
     private List<CalendarCellParams> cellParamsList;
     private Calendar calendar;
     private Map<String, CalendarDayParams> selectParamsMap;
     private CalendarPickerParams params;
-    public CalendarPickerView(Context context, CalendarPickerParams params) {
+    private CalendarPickerDialog dialog;
+
+    public CalendarPickerView(Context context, CalendarPickerParams params, CalendarPickerDialog dialog) {
         super(context);
 
+        this.dialog = dialog;
         this.params = params;
 
+        checkMode();
         init();
+    }
+
+    private void checkMode() {
+        if(params.getMode().equals(CalendarMode.SELECT)) {
+            params.setPickerFromToListener(null);
+            params.setStartDate(null);
+            params.setEndDate(null);
+        }
+        else if(params.getMode().equals(CalendarMode.FROM_TO)){
+            params.setPickerListener(null);
+        }
     }
 
     private void init() {
         View.inflate(getContext(), R.layout.picker_main, this);
 
         recyclerView = (RecyclerView) findViewById(R.id.picker_main_recyclerview);
+        selectBtn = (Button) findViewById(R.id.picker_main_select_btn);
 
         cellParamsList = new ArrayList<>();
 
@@ -70,6 +90,17 @@ public class CalendarPickerView extends RelativeLayout {
 
         prevBtn.setOnClickListener(btnClickListener);
         nextBtn.setOnClickListener(btnClickListener);
+        selectBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                if(params.getMode().equals(CalendarMode.FROM_TO)) {
+                    if(params.getPickerFromToListener() != null) {
+                        params.getPickerFromToListener().onPickerFromToListener(dialog, selectParamsMap.get(Config.SELECT_START_DATE), selectParamsMap.get(Config.SELECT_END_DATE));
+                    }
+                }
+            }
+        });
 
         initRecyclerView();
         createMonthOfDay();
@@ -84,42 +115,57 @@ public class CalendarPickerView extends RelativeLayout {
             @Override
             public void onDayClickListener(CalendarDayParams day, int position) {
                 Log.d("calendar", day.getYear() + "년" + day.getMonth() + "월" + day.getDay() + "일");
-
-                if(selectParamsMap.containsKey(Config.SELECT_START_DATE)) {
-                    selectParamsMap.put(Config.SELECT_END_DATE, day);
-                }
-                else {
-                    selectParamsMap.put(Config.SELECT_START_DATE, day);
-                }
-
-                if(selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
-
-                    CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_START_DATE);
-                    CalendarDayParams endDay = selectParamsMap.get(Config.SELECT_END_DATE);
-                    boolean allCheck = false;
-                    for(int i = 0 ;i < cellParamsList.size() ; i ++) {
-                        if(DateUtil.isDifferenceOfDay(startDay, cellParamsList.get(i).getDayParams()) >= 0 &&
-                                (DateUtil.isDifferenceOfDay(endDay, cellParamsList.get(i).getDayParams()) == -1 ||
-                                DateUtil.isDifferenceOfDay(endDay, cellParamsList.get(i).getDayParams()) == 0 )) {
-                            cellParamsList.get(i).setSelected(true);
-                            allCheck = true;
-                        }
-                        else {
-                            cellParamsList.get(i).setSelected(false);
-                        }
+                if(params.getMode().equals(CalendarMode.FROM_TO)) {
+                    if(selectParamsMap.containsKey(Config.SELECT_START_DATE)) {
+                        selectParamsMap.put(Config.SELECT_END_DATE, day);
+                    }
+                    else {
+                        selectParamsMap.put(Config.SELECT_START_DATE, day);
                     }
 
-                    if(!allCheck) {
-                        selectParamsMap.clear();
+                    if(selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
+
+                        CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_START_DATE);
+                        CalendarDayParams endDay = selectParamsMap.get(Config.SELECT_END_DATE);
+                        boolean allCheck = false;
+                        for(int i = 0 ;i < cellParamsList.size() ; i ++) {
+                            if(DateUtil.isDifferenceOfDay(startDay, cellParamsList.get(i).getDayParams()) >= 0 &&
+                                    (DateUtil.isDifferenceOfDay(endDay, cellParamsList.get(i).getDayParams()) == -1 ||
+                                            DateUtil.isDifferenceOfDay(endDay, cellParamsList.get(i).getDayParams()) == 0 )) {
+                                cellParamsList.get(i).setSelected(true);
+                                allCheck = true;
+                            }
+                            else {
+                                cellParamsList.get(i).setSelected(false);
+                            }
+                        }
+
+                        if(!allCheck) {
+                            selectParamsMap.clear();
+                        }
+
+                        adapter.notifyDataSetChanged();
+
                     }
-
-                    adapter.notifyDataSetChanged();
-
+                    else {
+                        if(position -7 >= 0) {
+                            cellParamsList.get(position -7).setSelected(true);
+                            adapter.notifyItemChanged(position);
+                        }
+                    }
                 }
                 else {
                     if(position -7 >= 0) {
                         cellParamsList.get(position -7).setSelected(true);
+                        selectParamsMap.put(Config.SELECT_DATE, cellParamsList.get(position - 7).getDayParams());
                         adapter.notifyItemChanged(position);
+
+                        if(params.getMode().equals(CalendarMode.SELECT)) {
+                            dialog.dismiss();
+                            if(params.getPickerFromToListener() != null) {
+                                params.getPickerListener().onPickerListener(dialog, selectParamsMap.get(Config.SELECT_DATE));
+                            }
+                        }
                     }
                 }
             }

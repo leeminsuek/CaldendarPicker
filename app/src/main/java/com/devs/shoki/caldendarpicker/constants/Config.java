@@ -7,4 +7,5 @@ public class Config {
 
     public static final String SELECT_START_DATE = "start";
     public static final String SELECT_END_DATE = "end";
+    public static final String SELECT_DATE = "select";
 }

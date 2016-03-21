@@ -1,5 +1,7 @@
 package com.devs.shoki.caldendarpicker.calendar;
 
+import com.devs.shoki.caldendarpicker.constants.CalendarMode;
+import com.devs.shoki.caldendarpicker.listener.IPickerFromToListener;
 import com.devs.shoki.caldendarpicker.listener.IPickerListener;
 
 /**
@@ -8,8 +10,26 @@ import com.devs.shoki.caldendarpicker.listener.IPickerListener;
 public class CalendarPickerParams {
 
     private IPickerListener pickerListener;
+    private IPickerFromToListener pickerFromToListener;
     private CalendarDayParams startDate;
     private CalendarDayParams endDate;
+    private CalendarMode mode = CalendarMode.DEFAULT;
+
+    public CalendarMode getMode() {
+        return mode;
+    }
+
+    public void setMode(CalendarMode mode) {
+        this.mode = mode;
+    }
+
+    public IPickerFromToListener getPickerFromToListener() {
+        return pickerFromToListener;
+    }
+
+    public void setPickerFromToListener(IPickerFromToListener pickerFromToListener) {
+        this.pickerFromToListener = pickerFromToListener;
+    }
 
     public IPickerListener getPickerListener() {
         return pickerListener;
