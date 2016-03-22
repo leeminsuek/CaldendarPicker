@@ -9,7 +9,15 @@ public class CalendarCellParams {
     private int monthState;
     private CalendarDayParams dayParams;
     private boolean selected = false;
+    private int selectedState;
 
+    public int getSelectedState() {
+        return selectedState;
+    }
+
+    public void setSelectedState(int selectedState) {
+        this.selectedState = selectedState;
+    }
 
     public boolean isSelected() {
         return selected;

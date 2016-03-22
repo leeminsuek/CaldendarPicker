@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.devs.shoki.caldendarpicker.calendar.CalendarCellParams;
 import com.devs.shoki.caldendarpicker.calendar.CalendarDayParams;
+import com.devs.shoki.caldendarpicker.calendar.CalendarPickerParams;
 import com.devs.shoki.caldendarpicker.calendar.day.CalendarCellView;
 import com.devs.shoki.caldendarpicker.calendar.week.CalendarWeekView;
 import com.devs.shoki.caldendarpicker.constants.Config;
@@ -31,11 +32,13 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
     private List<CalendarCellParams> paramsList = new ArrayList<>();
     private Map<String, CalendarDayParams> selectParamsMap;
     private IDayClickListener iDayClickListener;
+    private CalendarPickerParams calendarPickerParams;
 
-    public CalendarGridAdapter(List<CalendarCellParams> cellParamses, Map<String, CalendarDayParams> selectDayMap) {
+    public CalendarGridAdapter(List<CalendarCellParams> cellParamses, Map<String, CalendarDayParams> selectDayMap, CalendarPickerParams pickerParams) {
         for(Week week : Week.values()){
             weekList.add(week);
         }
+        calendarPickerParams = pickerParams;
         selectParamsMap = selectDayMap;
         paramsList = cellParamses;
         setSelectedItem();
@@ -52,12 +55,19 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
 
     private void setSelectedItem() {
         if(selectParamsMap.containsKey(Config.SELECT_START_DATE) && selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
-            CalendarDayParams day1 = selectParamsMap.get(Config.SELECT_START_DATE);
-            CalendarDayParams day2 = selectParamsMap.get(Config.SELECT_END_DATE);
+            CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_START_DATE);
+            CalendarDayParams endDay = selectParamsMap.get(Config.SELECT_END_DATE);
             for(int i = 0 ;i < paramsList.size() ; i ++) {
-                if(DateUtil.isDifferenceOfDay(day1, paramsList.get(i).getDayParams()) >= 0 &&
-                        (DateUtil.isDifferenceOfDay(day2, paramsList.get(i).getDayParams()) == -1 ||
-                                DateUtil.isDifferenceOfDay(day2, paramsList.get(i).getDayParams()) == 0 )) {
+                int startDiff = DateUtil.isDifferenceOfDay(startDay, paramsList.get(i).getDayParams());
+                int endDiff = DateUtil.isDifferenceOfDay(endDay, paramsList.get(i).getDayParams());
+                if (startDiff == 0 || endDiff == 0 || (startDiff == 1 && endDiff == -1)) {
+                    if (startDiff == 0) {
+                        paramsList.get(i).setSelectedState(Config.SELECTED_FIRST_DATE);
+                    } else if (endDiff == 0) {
+                        paramsList.get(i).setSelectedState(Config.SELECTED_LAST_DATE);
+                    } else {
+                        paramsList.get(i).setSelectedState(Config.SELECTED_BETWEEN_DATE);
+                    }
                     paramsList.get(i).setSelected(true);
                 }
                 else {
@@ -82,7 +92,6 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
 
             CalendarCellView cell = new CalendarCellView(parent.getContext());
             CalendarCellViewHolder calendarCellViewHolder = new CalendarCellViewHolder(cell);
-            calendarCellViewHolder.calendarCellView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, size));
             return calendarCellViewHolder;
         }
     }
@@ -96,7 +105,7 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
         else {
             CalendarCellParams params = paramsList.get(position- HEADER_CELL_CNT);
             CalendarCellViewHolder calendarCellViewHolder = (CalendarCellViewHolder) holder;
-            calendarCellViewHolder.calendarCellView.setParams(params);
+            calendarCellViewHolder.calendarCellView.setParams(params, calendarPickerParams);
         }
     }
 

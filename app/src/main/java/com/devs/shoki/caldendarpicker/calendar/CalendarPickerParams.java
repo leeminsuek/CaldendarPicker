@@ -1,5 +1,7 @@
 package com.devs.shoki.caldendarpicker.calendar;
 
+import android.graphics.drawable.Drawable;
+
 import com.devs.shoki.caldendarpicker.constants.CalendarMode;
 import com.devs.shoki.caldendarpicker.listener.IPickerFromToListener;
 import com.devs.shoki.caldendarpicker.listener.IPickerListener;
@@ -14,6 +16,42 @@ public class CalendarPickerParams {
     private CalendarDayParams startDate;
     private CalendarDayParams endDate;
     private CalendarMode mode = CalendarMode.DEFAULT;
+    private Drawable selectedDrawable;
+    private Drawable selectedFirstDrawable;
+    private Drawable selectedLastDrawable;
+    private Drawable selectedBetweenDrawable;
+
+    public Drawable getSelectedFirstDrawable() {
+        return selectedFirstDrawable;
+    }
+
+    public void setSelectedFirstDrawable(Drawable selectedFirstDrawable) {
+        this.selectedFirstDrawable = selectedFirstDrawable;
+    }
+
+    public Drawable getSelectedLastDrawable() {
+        return selectedLastDrawable;
+    }
+
+    public void setSelectedLastDrawable(Drawable selectedLastDrawable) {
+        this.selectedLastDrawable = selectedLastDrawable;
+    }
+
+    public Drawable getSelectedBetweenDrawable() {
+        return selectedBetweenDrawable;
+    }
+
+    public void setSelectedBetweenDrawable(Drawable selectedBetweenDrawable) {
+        this.selectedBetweenDrawable = selectedBetweenDrawable;
+    }
+
+    public Drawable getSelectedDrawable() {
+        return selectedDrawable;
+    }
+
+    public void setSelectedDrawable(Drawable selectedDrawable) {
+        this.selectedDrawable = selectedDrawable;
+    }
 
     public CalendarMode getMode() {
         return mode;

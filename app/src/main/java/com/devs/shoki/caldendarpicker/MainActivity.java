@@ -1,13 +1,12 @@
 package com.devs.shoki.caldendarpicker;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.devs.shoki.caldendarpicker.calendar.CalendarDayParams;
 import com.devs.shoki.caldendarpicker.constants.CalendarMode;
 import com.devs.shoki.caldendarpicker.listener.IPickerFromToListener;
-import com.devs.shoki.caldendarpicker.listener.IPickerListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,16 +23,17 @@ public class MainActivity extends AppCompatActivity {
                 .setOnPickerFromToListener(new IPickerFromToListener() {
                     @Override
                     public void onPickerFromToListener(CalendarPickerDialog dialog, CalendarDayParams from, CalendarDayParams to) {
-                        Log.d("calendar", from.getYear()+ "" + from.getMonth() + "" + from.getDay() +" ~ " + to.getYear() + ""+ to.getMonth() + ""+ to.getDay());
+                        Log.d("calendar", from.getYear() + "" + from.getMonth() + "" + from.getDay() + " ~ " + to.getYear() + "" + to.getMonth() + "" + to.getDay());
                     }
                 })
-                .setSelectedMode(CalendarMode.SELECT)
-                .setOnPickerListener(new IPickerListener() {
-                    @Override
-                    public void onPickerListener(CalendarPickerDialog dialog, CalendarDayParams day) {
-                        Log.d("calendar", day.getYear()+ "" + day.getMonth() + "" + day.getDay());
-                    }
-                })
+                .setSelectedMode(CalendarMode.FROM_TO)
+//                .setSelectedMode(CalendarMode.SELECT)
+//                .setOnPickerListener(new IPickerListener() {
+//                    @Override
+//                    public void onPickerListener(CalendarPickerDialog dialog, CalendarDayParams day) {
+//                        Log.d("calendar", day.getYear()+ "" + day.getMonth() + "" + day.getDay());
+//                    }
+//                })
                 .create();
 
         calendarPickerDialog.show();

@@ -1,6 +1,9 @@
 package com.devs.shoki.caldendarpicker;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
 import com.devs.shoki.caldendarpicker.calendar.CalendarDayParams;
@@ -72,7 +75,62 @@ public class CalendarPickerDialog extends AlertDialog {
             return this;
         }
 
+        public Builder setSelectedDrawable(@DrawableRes int drawable) {
+            calendarPickerParams.setSelectedDrawable(ContextCompat.getDrawable(context, drawable));
+            return this;
+        }
+
+        public Builder setSelectedDrawable(Drawable drawable) {
+            calendarPickerParams.setSelectedDrawable(drawable);
+            return this;
+        }
+
+        public Builder setSelectedFirstDateDrawable(@DrawableRes int drawable) {
+            calendarPickerParams.setSelectedFirstDrawable(ContextCompat.getDrawable(context, drawable));
+            return this;
+        }
+
+        public Builder setSelectedFirstDateDrawable(Drawable drawable) {
+            calendarPickerParams.setSelectedFirstDrawable(drawable);
+            return this;
+        }
+
+        public Builder setSelectedLastDateDrawable(@DrawableRes int drawable) {
+            calendarPickerParams.setSelectedLastDrawable(ContextCompat.getDrawable(context, drawable));
+            return this;
+        }
+
+        public Builder setSelectedLastDateDrawable(Drawable drawable) {
+            calendarPickerParams.setSelectedLastDrawable(drawable);
+            return this;
+        }
+
+        public Builder setSelectedBetweenDateDrawable(@DrawableRes int drawable) {
+            calendarPickerParams.setSelectedBetweenDrawable(ContextCompat.getDrawable(context, drawable));
+            return this;
+        }
+
+        public Builder setSelectedBetweenDateDrawable(Drawable drawable) {
+            calendarPickerParams.setSelectedBetweenDrawable(drawable);
+            return this;
+        }
+
         public CalendarPickerDialog create() {
+            if(calendarPickerParams.getSelectedDrawable() == null) {
+                calendarPickerParams.setSelectedDrawable(ContextCompat.getDrawable(context, R.drawable.calendar_date_selected));
+            }
+
+            if(calendarPickerParams.getSelectedFirstDrawable() == null) {
+                calendarPickerParams.setSelectedFirstDrawable(ContextCompat.getDrawable(context, R.drawable.calendar_date_selected_first));
+            }
+
+            if(calendarPickerParams.getSelectedLastDrawable() == null) {
+                calendarPickerParams.setSelectedLastDrawable(ContextCompat.getDrawable(context, R.drawable.calendar_date_selecte_last));
+            }
+
+            if(calendarPickerParams.getSelectedBetweenDrawable() == null) {
+                calendarPickerParams.setSelectedBetweenDrawable(ContextCompat.getDrawable(context, R.drawable.calendar_date_selected_item));
+            }
             if(calendarPickerDialog == null) {
                 calendarPickerDialog = new CalendarPickerDialog(context, calendarPickerParams);
             }

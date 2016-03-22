@@ -1,5 +1,7 @@
 package com.devs.shoki.caldendarpicker.util;
 
+import android.util.Log;
+
 import com.devs.shoki.caldendarpicker.calendar.CalendarDayParams;
 
 import java.text.ParseException;
@@ -97,10 +99,10 @@ public class DateUtil {
 
     public static int isDifferenceOfDay(CalendarDayParams day1, CalendarDayParams day2) {
         Calendar aDate = Calendar.getInstance(); // 비교하고자 하는 임의의 날짜
-        aDate.set(day1.getYear(), day1.getMonth(), day1.getDay());
+        aDate.set(day1.getYear(), day1.getMonth()-1, day1.getDay());
 
-        Calendar bDate = Calendar.getInstance(); // 이것이 시스템의 날짜
-        bDate.set(day2.getYear(), day2.getMonth(), day2.getDay());
+        Calendar bDate = (Calendar) aDate.clone(); // 이것이 시스템의 날짜
+        bDate.set(day2.getYear(), day2.getMonth()-1, day2.getDay());
 
         // 여기에 시,분,초를 0으로 세팅해야 before, after를 제대로 비교함
         aDate.set(Calendar.HOUR_OF_DAY, 0);
@@ -114,11 +116,21 @@ public class DateUtil {
         bDate.set(Calendar.MILLISECOND, 0);
 
 
-        if (aDate.after(bDate)) // aDate가 bDate보다 클 경우 출력
+        // aDate가 bDate보다 클 경우 출력
+        if (aDate.after(bDate)) {
+            Log.d("diff", day1.getMonth() + "월" + day1.getDay() + "일 ////" + day2.getMonth() + "월" + day2.getDay() + "일 //// 더크네!");
             return -1;
-        else if (aDate.before(bDate)) // aDate가 bDate보다 작을 경우 출력
+        }
+        // aDate가 bDate보다 작을 경우 출력
+        else if (aDate.before(bDate)) {
+            Log.d("diff",  day1.getMonth() + "월" + day1.getDay() + "일 ////" +day2.getMonth() + "월" + day2.getDay() + "일 //// 더작네!");
             return 1;
-        else // aDate = bDate인 경우
+        }
+        // aDate = bDate인 경우
+        else {
+            Log.d("diff",  day1.getMonth() + "월" + day1.getDay() + "일 ////" +day2.getMonth() + "월" + day2.getDay() + "일 //// 같네!");
             return 0;
+        }
+
     }
 }
