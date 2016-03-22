@@ -12,5 +12,6 @@ public class Config {
     public static final int SELECTED_FIRST_DATE = 0;
     public static final int SELECTED_LAST_DATE = 1;
     public static final int SELECTED_BETWEEN_DATE = 2;
+    public static final int SELECTED_ONE_DATE = 3;
     public static final int SELECTED_NONE_DATE = -1;
 }

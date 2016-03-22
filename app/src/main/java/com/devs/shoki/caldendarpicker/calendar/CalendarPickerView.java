@@ -123,7 +123,21 @@ public class CalendarPickerView extends RelativeLayout {
                 Log.d("calendar", day.getYear() + "년" + day.getMonth() + "월" + day.getDay() + "일");
                 if (params.getMode().equals(CalendarMode.FROM_TO)) {
                     if (selectParamsMap.containsKey(Config.SELECT_START_DATE)) {
-                        selectParamsMap.put(Config.SELECT_END_DATE, day);
+                        int diff = DateUtil.isDifferenceOfDay(selectParamsMap.get(Config.SELECT_START_DATE), day);
+                        Log.d("calendar", "diff = "+ diff);
+                        if(diff == -1) {
+                            if(selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
+                                selectParamsMap.put(Config.SELECT_START_DATE, day);
+                            }
+                            else {
+                                selectParamsMap.put(Config.SELECT_END_DATE, selectParamsMap.get(Config.SELECT_START_DATE));
+                                selectParamsMap.put(Config.SELECT_START_DATE, day);
+                            }
+
+                        }
+                        else {
+                            selectParamsMap.put(Config.SELECT_END_DATE, day);
+                        }
                     } else {
                         selectParamsMap.put(Config.SELECT_START_DATE, day);
                     }
@@ -137,7 +151,9 @@ public class CalendarPickerView extends RelativeLayout {
                             int startDiff = DateUtil.isDifferenceOfDay(startDay, cellParamsList.get(i).getDayParams());
                             int endDiff = DateUtil.isDifferenceOfDay(endDay, cellParamsList.get(i).getDayParams());
                             if (startDiff == 0 || endDiff == 0 || (startDiff == 1 && endDiff == -1)) {
-                                if (startDiff == 0) {
+                                if (startDiff == 0 && endDiff == 0) {
+                                    cellParamsList.get(i).setSelectedState(Config.SELECTED_ONE_DATE);
+                                } else if (startDiff == 0) {
                                     cellParamsList.get(i).setSelectedState(Config.SELECTED_FIRST_DATE);
                                 } else if (endDiff == 0) {
                                     cellParamsList.get(i).setSelectedState(Config.SELECTED_LAST_DATE);
@@ -158,6 +174,12 @@ public class CalendarPickerView extends RelativeLayout {
 
                         adapter.notifyDataSetChanged();
 
+                    } else if (selectParamsMap.containsKey(Config.SELECT_START_DATE)) {
+                        if (position - 7 >= 0) {
+                            cellParamsList.get(position - 7).setSelected(true);
+                            cellParamsList.get(position - 7).setSelectedState(Config.SELECTED_NONE_DATE);
+                            adapter.notifyItemChanged(position);
+                        }
                     } else {
                         if (position - 7 >= 0) {
                             cellParamsList.get(position - 7).setSelected(true);
@@ -171,7 +193,7 @@ public class CalendarPickerView extends RelativeLayout {
                         adapter.notifyItemChanged(position);
 
                         if (params.getMode().equals(CalendarMode.SELECT)) {
-                            dialog.dismiss();
+//                            dialog.dismiss();
                             if (params.getPickerFromToListener() != null) {
                                 params.getPickerListener().onPickerListener(dialog, selectParamsMap.get(Config.SELECT_DATE));
                             }
@@ -182,6 +204,7 @@ public class CalendarPickerView extends RelativeLayout {
         });
 
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
 

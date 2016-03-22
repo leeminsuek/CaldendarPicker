@@ -71,6 +71,26 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
                     paramsList.get(i).setSelected(true);
                 }
                 else {
+                    paramsList.get(i).setSelectedState(Config.SELECTED_NONE_DATE);
+                    paramsList.get(i).setSelected(false);
+                }
+            }
+        }
+        else if(selectParamsMap.containsKey(Config.SELECT_START_DATE)) {
+            CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_START_DATE);
+            for(int i = 0 ;i < paramsList.size() ; i ++) {
+                int startDiff = DateUtil.isDifferenceOfDay(startDay, paramsList.get(i).getDayParams());
+                if (startDiff == 0 || startDiff == 1) {
+                    if (startDiff == 0) {
+                        paramsList.get(i).setSelectedState(Config.SELECTED_ONE_DATE);
+                    }
+                    else {
+                        paramsList.get(i).setSelectedState(Config.SELECTED_NONE_DATE);
+                    }
+                    paramsList.get(i).setSelected(true);
+                }
+                else {
+                    paramsList.get(i).setSelectedState(Config.SELECTED_NONE_DATE);
                     paramsList.get(i).setSelected(false);
                 }
             }
@@ -92,6 +112,7 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
 
             CalendarCellView cell = new CalendarCellView(parent.getContext());
             CalendarCellViewHolder calendarCellViewHolder = new CalendarCellViewHolder(cell);
+            calendarCellViewHolder.calendarCellView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, size));
             return calendarCellViewHolder;
         }
     }

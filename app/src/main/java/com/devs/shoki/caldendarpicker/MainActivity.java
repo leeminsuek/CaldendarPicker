@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         calendarPickerDialog = new CalendarPickerDialog.Builder(this)
-                .setStartDate(2016, 3, 21)
-                .setEndDate(2016, 3, 26)
+//                .setStartDate(2016, 3, 21)
+//                .setEndDate(2016, 3, 26)
                 .setOnPickerFromToListener(new IPickerFromToListener() {
                     @Override
                     public void onPickerFromToListener(CalendarPickerDialog dialog, CalendarDayParams from, CalendarDayParams to) {

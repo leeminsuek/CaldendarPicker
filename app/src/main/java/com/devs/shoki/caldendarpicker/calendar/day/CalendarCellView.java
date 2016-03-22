@@ -79,8 +79,11 @@ public class CalendarCellView extends RelativeLayout {
                 else if(params.getSelectedState() == Config.SELECTED_LAST_DATE) {
                     backgroundView.setBackgroundDrawable(pickerParams.getSelectedLastDrawable());
                 }
-                else {
+                else if(params.getSelectedState() == Config.SELECTED_BETWEEN_DATE) {
                     backgroundView.setBackgroundDrawable(pickerParams.getSelectedBetweenDrawable());
+                }
+                else {
+                    backgroundView.setBackgroundDrawable(pickerParams.getSelectedDrawable());
                 }
             }
         }
@@ -89,8 +92,8 @@ public class CalendarCellView extends RelativeLayout {
         }
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
-    }
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+//    }
 }
