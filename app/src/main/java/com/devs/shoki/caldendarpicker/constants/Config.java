@@ -5,9 +5,9 @@ package com.devs.shoki.caldendarpicker.constants;
  */
 public class Config {
 
-    public static final String SELECT_START_DATE = "start";
-    public static final String SELECT_END_DATE = "end";
-    public static final String SELECT_DATE = "select";
+    public static final String SELECT_FIRST_DATE_KEY = "first";
+    public static final String SELECT_LAST_DATE_KEY = "last";
+    public static final String SELECT_DATE_KEY = "select";
 
     public static final int SELECTED_FIRST_DATE = 0;
     public static final int SELECTED_LAST_DATE = 1;

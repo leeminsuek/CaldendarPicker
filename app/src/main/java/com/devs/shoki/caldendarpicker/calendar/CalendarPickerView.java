@@ -57,6 +57,18 @@ public class CalendarPickerView extends RelativeLayout {
     }
 
     /**
+     * 날짜선택 완료 버튼 enabled 체크
+     */
+    private void checkSelecteDate() {
+        if(selectParamsMap.containsKey(Config.SELECT_LAST_DATE_KEY)) {
+            selectBtn.setEnabled(true);
+        }
+        else {
+            selectBtn.setEnabled(false);
+        }
+    }
+
+    /**
      * 모드에 따른 이벤트/데이터 설정
      */
     private void checkMode() {
@@ -102,10 +114,10 @@ public class CalendarPickerView extends RelativeLayout {
         selectParamsMap = new HashMap<>();
 
         if (params.getFirstDate() != null) {
-            selectParamsMap.put(Config.SELECT_START_DATE, params.getFirstDate());
+            selectParamsMap.put(Config.SELECT_FIRST_DATE_KEY, params.getFirstDate());
 
             if (params.getLastDate() != null) {
-                selectParamsMap.put(Config.SELECT_END_DATE, params.getLastDate());
+                selectParamsMap.put(Config.SELECT_LAST_DATE_KEY, params.getLastDate());
             }
         }
 
@@ -123,7 +135,7 @@ public class CalendarPickerView extends RelativeLayout {
                 dialog.dismiss();
                 if (params.getMode().equals(CalendarMode.FROM_TO)) {
                     if (params.getPickerFromToListener() != null) {
-                        params.getPickerFromToListener().onPickerFromToListener(dialog, selectParamsMap.get(Config.SELECT_START_DATE), selectParamsMap.get(Config.SELECT_END_DATE));
+                        params.getPickerFromToListener().onPickerFromToListener(dialog, selectParamsMap.get(Config.SELECT_FIRST_DATE_KEY), selectParamsMap.get(Config.SELECT_LAST_DATE_KEY));
                     }
                 }
             }
@@ -131,6 +143,7 @@ public class CalendarPickerView extends RelativeLayout {
 
         initRecyclerView();
         createMonthOfDay();
+        checkSelecteDate();
     }
 
 
@@ -146,28 +159,28 @@ public class CalendarPickerView extends RelativeLayout {
             public void onDayClickListener(CalendarDayParams day, int position) {
                 Log.d("calendar", day.getYear() + "년" + day.getMonth() + "월" + day.getDay() + "일");
                 if (params.getMode().equals(CalendarMode.FROM_TO)) {
-                    if (selectParamsMap.containsKey(Config.SELECT_START_DATE)) {
-                        int diff = DateUtil.isDifferenceOfDay(selectParamsMap.get(Config.SELECT_START_DATE), day);
+                    if (selectParamsMap.containsKey(Config.SELECT_FIRST_DATE_KEY)) {
+                        int diff = DateUtil.isDifferenceOfDay(selectParamsMap.get(Config.SELECT_FIRST_DATE_KEY), day);
                         Log.d("calendar", "diff = " + diff);
                         if (diff == -1) {
-                            if (selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
-                                selectParamsMap.put(Config.SELECT_START_DATE, day);
+                            if (selectParamsMap.containsKey(Config.SELECT_LAST_DATE_KEY)) {
+                                selectParamsMap.put(Config.SELECT_FIRST_DATE_KEY, day);
                             } else {
-                                selectParamsMap.put(Config.SELECT_END_DATE, selectParamsMap.get(Config.SELECT_START_DATE));
-                                selectParamsMap.put(Config.SELECT_START_DATE, day);
+                                selectParamsMap.put(Config.SELECT_LAST_DATE_KEY, selectParamsMap.get(Config.SELECT_FIRST_DATE_KEY));
+                                selectParamsMap.put(Config.SELECT_FIRST_DATE_KEY, day);
                             }
 
                         } else {
-                            selectParamsMap.put(Config.SELECT_END_DATE, day);
+                            selectParamsMap.put(Config.SELECT_LAST_DATE_KEY, day);
                         }
                     } else {
-                        selectParamsMap.put(Config.SELECT_START_DATE, day);
+                        selectParamsMap.put(Config.SELECT_FIRST_DATE_KEY, day);
                     }
 
-                    if (selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
+                    if (selectParamsMap.containsKey(Config.SELECT_LAST_DATE_KEY)) {
 
-                        CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_START_DATE);
-                        CalendarDayParams endDay = selectParamsMap.get(Config.SELECT_END_DATE);
+                        CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_FIRST_DATE_KEY);
+                        CalendarDayParams endDay = selectParamsMap.get(Config.SELECT_LAST_DATE_KEY);
                         boolean allCheck = false;
                         for (int i = 0; i < cellParamsList.size(); i++) {
                             int startDiff = DateUtil.isDifferenceOfDay(startDay, cellParamsList.get(i).getDayParams());
@@ -196,7 +209,7 @@ public class CalendarPickerView extends RelativeLayout {
 
                         adapter.notifyDataSetChanged();
 
-                    } else if (selectParamsMap.containsKey(Config.SELECT_START_DATE)) {
+                    } else if (selectParamsMap.containsKey(Config.SELECT_FIRST_DATE_KEY)) {
                         if (position - 7 >= 0) {
                             cellParamsList.get(position - 7).setSelected(true);
                             cellParamsList.get(position - 7).setSelectedState(Config.SELECTED_NONE_DATE);
@@ -208,19 +221,21 @@ public class CalendarPickerView extends RelativeLayout {
                             adapter.notifyItemChanged(position);
                         }
                     }
+
+                    checkSelecteDate();
                 } else {
                     if (position - 7 >= 0) {
                         for (CalendarCellParams params : cellParamsList) {
                             params.setSelected(false);
                         }
                         cellParamsList.get(position - 7).setSelected(true);
-                        selectParamsMap.put(Config.SELECT_DATE, cellParamsList.get(position - 7).getDayParams());
+                        selectParamsMap.put(Config.SELECT_DATE_KEY, cellParamsList.get(position - 7).getDayParams());
                         adapter.notifyDataSetChanged();
 
                         if (params.getMode().equals(CalendarMode.SELECT)) {
 //                            dialog.dismiss();
                             if (params.getPickerFromToListener() != null) {
-                                params.getPickerListener().onPickerListener(dialog, selectParamsMap.get(Config.SELECT_DATE));
+                                params.getPickerListener().onPickerListener(dialog, selectParamsMap.get(Config.SELECT_DATE_KEY));
                             }
                         }
                     }

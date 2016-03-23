@@ -6,9 +6,9 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
+import com.devs.shoki.caldendarpicker.calendar.CalendarPickerView;
 import com.devs.shoki.caldendarpicker.calendar.param.CalendarDayParams;
 import com.devs.shoki.caldendarpicker.calendar.param.CalendarPickerParams;
-import com.devs.shoki.caldendarpicker.calendar.CalendarPickerView;
 import com.devs.shoki.caldendarpicker.constants.CalendarMode;
 import com.devs.shoki.caldendarpicker.listener.IPickerFromToListener;
 import com.devs.shoki.caldendarpicker.listener.IPickerListener;
@@ -144,6 +144,7 @@ public class CalendarPickerDialog extends AlertDialog {
             if(calendarPickerParams.getSelectedBetweenDrawable() == null) {
                 calendarPickerParams.setSelectedBetweenDrawable(ContextCompat.getDrawable(context, R.drawable.calendar_date_selected_item));
             }
+
             if(calendarPickerDialog == null) {
                 calendarPickerDialog = new CalendarPickerDialog(context, calendarPickerParams);
             }

@@ -15,7 +15,6 @@ public class CalendarWeekView extends RelativeLayout {
 
     public CalendarWeekView(Context context) {
         super(context);
-
         init();
     }
 

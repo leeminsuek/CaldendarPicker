@@ -54,9 +54,9 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
     }
 
     private void setSelectedItem() {
-        if (selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
-            CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_START_DATE);
-            CalendarDayParams endDay = selectParamsMap.get(Config.SELECT_END_DATE);
+        if (selectParamsMap.containsKey(Config.SELECT_LAST_DATE_KEY)) {
+            CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_FIRST_DATE_KEY);
+            CalendarDayParams endDay = selectParamsMap.get(Config.SELECT_LAST_DATE_KEY);
             for (int i = 0; i < paramsList.size(); i++) {
                 int startDiff = DateUtil.isDifferenceOfDay(startDay, paramsList.get(i).getDayParams());
                 int endDiff = DateUtil.isDifferenceOfDay(endDay, paramsList.get(i).getDayParams());
@@ -76,8 +76,8 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
                     paramsList.get(i).setSelected(false);
                 }
             }
-        } else if (selectParamsMap.containsKey(Config.SELECT_START_DATE)) {
-            CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_START_DATE);
+        } else if (selectParamsMap.containsKey(Config.SELECT_FIRST_DATE_KEY)) {
+            CalendarDayParams startDay = selectParamsMap.get(Config.SELECT_FIRST_DATE_KEY);
             for (int i = 0; i < paramsList.size(); i++) {
                 int startDiff = DateUtil.isDifferenceOfDay(startDay, paramsList.get(i).getDayParams());
                 if (startDiff == 0 || startDiff == 1) {
@@ -92,9 +92,9 @@ public class CalendarGridAdapter extends RecyclerView.Adapter<CalendarGridAdapte
                     paramsList.get(i).setSelected(false);
                 }
             }
-        } else if (selectParamsMap.containsKey(Config.SELECT_DATE)) {
+        } else if (selectParamsMap.containsKey(Config.SELECT_DATE_KEY)) {
             for (int i = 0; i < paramsList.size(); i++) {
-                int diff = DateUtil.isDifferenceOfDay(selectParamsMap.get(Config.SELECT_DATE), paramsList.get(i).getDayParams());
+                int diff = DateUtil.isDifferenceOfDay(selectParamsMap.get(Config.SELECT_DATE_KEY), paramsList.get(i).getDayParams());
                 if (diff == 0) {
                     paramsList.get(i).setSelectedState(Config.SELECTED_ONE_DATE);
                     paramsList.get(i).setSelected(true);

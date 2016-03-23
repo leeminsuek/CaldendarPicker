@@ -6,9 +6,21 @@ public class CalendarCellParams {
     public CalendarCellParams() {
     }
 
+    /**
+     * 한페이지 이전달 날짜인지 다음달 날짜인지 해당달 날짜인지 구분
+     */
     private int monthState;
+    /**
+     * 날짜정보
+     */
     private CalendarDayParams dayParams;
+    /**
+     * 선택한 날짜인지
+     */
     private boolean selected = false;
+    /**
+     * 선택한날짜중 시작,끝,중간 구분
+     */
     private int selectedState;
 
     public int getSelectedState() {
