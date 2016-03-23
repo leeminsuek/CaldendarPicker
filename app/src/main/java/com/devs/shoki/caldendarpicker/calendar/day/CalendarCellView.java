@@ -1,6 +1,8 @@
 package com.devs.shoki.caldendarpicker.calendar.day;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -20,7 +22,7 @@ public class CalendarCellView extends RelativeLayout {
 
     private CalendarCellParams params;
     private CalendarPickerParams pickerParams;
-    private View backgroundView;
+    private View backgroundView, backgroundView2;
 
 
     public CalendarCellView(Context context) {
@@ -37,6 +39,7 @@ public class CalendarCellView extends RelativeLayout {
         View.inflate(getContext(), R.layout.picker_cell, this);
 
         backgroundView = findViewById(R.id.picker_cell_background);
+        backgroundView2 = findViewById(R.id.picker_cell_full_background);
     }
 
     public void setTitle(String day) {
@@ -49,13 +52,13 @@ public class CalendarCellView extends RelativeLayout {
         TextView titleTxtv = (TextView) findViewById(R.id.picker_cell_title_txtv);
 
         if(state == MonthState.PREV) {
-            titleTxtv.setTextColor(getContext().getResources().getColor(R.color.prevTextColor));
+            titleTxtv.setTextColor(ContextCompat.getColor(getContext(), R.color.prevTextColor));
         }
         else if(state == MonthState.NOW) {
-            titleTxtv.setTextColor(getContext().getResources().getColor(R.color.nowTextColor));
+            titleTxtv.setTextColor(ContextCompat.getColor(getContext(), R.color.nowTextColor));
         }
         else {
-            titleTxtv.setTextColor(getContext().getResources().getColor(R.color.nextTextColor));
+            titleTxtv.setTextColor(ContextCompat.getColor(getContext(), R.color.nextTextColor));
         }
     }
 
@@ -68,32 +71,45 @@ public class CalendarCellView extends RelativeLayout {
     }
 
     public void setBackgroundColor() {
+        setBackgroundImage(backgroundView, null);
+        setBackgroundImage(backgroundView2, null);
         if(params.isSelected()) {
             if(pickerParams.getMode().equals(CalendarMode.SELECT)) {
-                backgroundView.setBackgroundDrawable(pickerParams.getSelectedDrawable());
+                setBackgroundImage(backgroundView, pickerParams.getSelectedDrawable());
+                RelativeLayout.LayoutParams params = (LayoutParams) backgroundView.getLayoutParams();
+                params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
             }
             else if(pickerParams.getMode().equals(CalendarMode.FROM_TO)) {
                 if(params.getSelectedState() == Config.SELECTED_FIRST_DATE) {
-                    backgroundView.setBackgroundDrawable(pickerParams.getSelectedFirstDrawable());
+                    setBackgroundImage(backgroundView, pickerParams.getSelectedFirstDrawable());
+                    RelativeLayout.LayoutParams params = (LayoutParams) backgroundView.getLayoutParams();
+                    params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
                 }
                 else if(params.getSelectedState() == Config.SELECTED_LAST_DATE) {
-                    backgroundView.setBackgroundDrawable(pickerParams.getSelectedLastDrawable());
+                    setBackgroundImage(backgroundView, pickerParams.getSelectedLastDrawable());
+                    RelativeLayout.LayoutParams params = (LayoutParams) backgroundView.getLayoutParams();
+                    params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
                 }
                 else if(params.getSelectedState() == Config.SELECTED_BETWEEN_DATE) {
-                    backgroundView.setBackgroundDrawable(pickerParams.getSelectedBetweenDrawable());
+                    setBackgroundImage(backgroundView2, pickerParams.getSelectedBetweenDrawable());
                 }
                 else {
-                    backgroundView.setBackgroundDrawable(pickerParams.getSelectedDrawable());
+                    setBackgroundImage(backgroundView, pickerParams.getSelectedDrawable());
+                    RelativeLayout.LayoutParams params = (LayoutParams) backgroundView.getLayoutParams();
+                    params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
                 }
             }
         }
         else {
-            backgroundView.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.calendar_date_default));
+            setBackgroundImage(backgroundView2, ContextCompat.getDrawable(getContext(), R.drawable.calendar_date_default));
         }
     }
 
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
-//    }
+    private void setBackgroundImage(View view, Drawable drawable) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            view.setBackgroundDrawable(drawable);
+        } else {
+            view.setBackground(drawable);
+        }
+    }
 }

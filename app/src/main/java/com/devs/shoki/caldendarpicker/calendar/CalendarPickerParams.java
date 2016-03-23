@@ -11,11 +11,34 @@ import com.devs.shoki.caldendarpicker.listener.IPickerListener;
  */
 public class CalendarPickerParams {
 
+    /**
+     * 단일선택 콜백
+     */
     private IPickerListener pickerListener;
+    /**
+     * 기간선택 콜백
+     */
     private IPickerFromToListener pickerFromToListener;
+    /**
+     * 기간선택 선택된 날짜 (시작)
+     */
+    private CalendarDayParams firstDate;
+    /**
+     * 기간선택 선택된 날짜 (마지막)
+     */
+    private CalendarDayParams lastDate;
+    /**
+     * 시작날짜
+     */
     private CalendarDayParams startDate;
-    private CalendarDayParams endDate;
+
+    /**
+     * 모드 SELECTE / FROM_TO
+     */
     private CalendarMode mode = CalendarMode.DEFAULT;
+    /**
+     * 선택했을때 보여줄 이미지들
+     */
     private Drawable selectedDrawable;
     private Drawable selectedFirstDrawable;
     private Drawable selectedLastDrawable;
@@ -77,19 +100,27 @@ public class CalendarPickerParams {
         this.pickerListener = pickerListener;
     }
 
+    public CalendarDayParams getFirstDate() {
+        return firstDate;
+    }
+
+    public void setFirstDate(CalendarDayParams firstDate) {
+        this.firstDate = firstDate;
+    }
+
+    public CalendarDayParams getLastDate() {
+        return lastDate;
+    }
+
+    public void setLastDate(CalendarDayParams lastDate) {
+        this.lastDate = lastDate;
+    }
+
     public CalendarDayParams getStartDate() {
         return startDate;
     }
 
     public void setStartDate(CalendarDayParams startDate) {
         this.startDate = startDate;
-    }
-
-    public CalendarDayParams getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(CalendarDayParams endDate) {
-        this.endDate = endDate;
     }
 }

@@ -57,21 +57,21 @@ public class CalendarPickerDialog extends AlertDialog {
             return this;
         }
 
-        public Builder setStartDate(int year, int month, int day) {
+        public Builder setFirstDate(int year, int month, int day) {
             CalendarDayParams dayParams = new CalendarDayParams();
             dayParams.setYear(year);
             dayParams.setMonth(month);
             dayParams.setDay(day);
-            calendarPickerParams.setStartDate(dayParams);
+            calendarPickerParams.setFirstDate(dayParams);
             return this;
         }
 
-        public Builder setEndDate(int year, int month, int day) {
+        public Builder setLastDate(int year, int month, int day) {
             CalendarDayParams dayParams = new CalendarDayParams();
             dayParams.setYear(year);
             dayParams.setMonth(month);
             dayParams.setDay(day);
-            calendarPickerParams.setEndDate(dayParams);
+            calendarPickerParams.setLastDate(dayParams);
             return this;
         }
 
@@ -115,6 +115,19 @@ public class CalendarPickerDialog extends AlertDialog {
             return this;
         }
 
+        public Builder setStartDate(int year, int month, int day) {
+            CalendarDayParams dayParams = new CalendarDayParams();
+            dayParams.setYear(year);
+            dayParams.setMonth(month);
+            dayParams.setDay(day);
+            calendarPickerParams.setStartDate(dayParams);
+            return this;
+        }
+
+        /**
+         * 디폴트 설정 후 생성
+         * @return
+         */
         public CalendarPickerDialog create() {
             if(calendarPickerParams.getSelectedDrawable() == null) {
                 calendarPickerParams.setSelectedDrawable(ContextCompat.getDrawable(context, R.drawable.calendar_date_selected));

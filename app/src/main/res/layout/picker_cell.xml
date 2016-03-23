@@ -7,6 +7,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_centerInParent="true"
+        android:id="@+id/picker_cell_full_background"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
         android:id="@+id/picker_cell_background"
         android:layout_height="wrap_content"></RelativeLayout>
 

@@ -56,10 +56,24 @@ public class CalendarPickerView extends RelativeLayout {
     private void checkMode() {
         if (params.getMode().equals(CalendarMode.SELECT)) {
             params.setPickerFromToListener(null);
-            params.setStartDate(null);
-            params.setEndDate(null);
+            params.setFirstDate(null);
+            params.setLastDate(null);
         } else if (params.getMode().equals(CalendarMode.FROM_TO)) {
             params.setPickerListener(null);
+        }
+    }
+
+    private void setStartDate() {
+        calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        if(params.getStartDate() != null) {
+            CalendarDayParams dayParams = params.getStartDate();
+            calendar.set(dayParams.getYear(), dayParams.getMonth()-1, dayParams.getDay());
         }
     }
 
@@ -71,20 +85,15 @@ public class CalendarPickerView extends RelativeLayout {
 
         cellParamsList = new ArrayList<>();
 
-        calendar = Calendar.getInstance();
-
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        setStartDate();
 
         selectParamsMap = new HashMap<>();
 
-        if (params.getStartDate() != null) {
-            selectParamsMap.put(Config.SELECT_START_DATE, params.getStartDate());
+        if (params.getFirstDate() != null) {
+            selectParamsMap.put(Config.SELECT_START_DATE, params.getFirstDate());
 
-            if (params.getEndDate() != null) {
-                selectParamsMap.put(Config.SELECT_END_DATE, params.getEndDate());
+            if (params.getLastDate() != null) {
+                selectParamsMap.put(Config.SELECT_END_DATE, params.getLastDate());
             }
         }
 
@@ -188,9 +197,12 @@ public class CalendarPickerView extends RelativeLayout {
                     }
                 } else {
                     if (position - 7 >= 0) {
+                        for(CalendarCellParams params : cellParamsList) {
+                            params.setSelected(false);
+                        }
                         cellParamsList.get(position - 7).setSelected(true);
                         selectParamsMap.put(Config.SELECT_DATE, cellParamsList.get(position - 7).getDayParams());
-                        adapter.notifyItemChanged(position);
+                        adapter.notifyDataSetChanged();
 
                         if (params.getMode().equals(CalendarMode.SELECT)) {
 //                            dialog.dismiss();

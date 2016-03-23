@@ -101,7 +101,7 @@ public class DateUtil {
         Calendar aDate = Calendar.getInstance(); // 비교하고자 하는 임의의 날짜
         aDate.set(day1.getYear(), day1.getMonth()-1, day1.getDay());
 
-        Calendar bDate = (Calendar) aDate.clone(); // 이것이 시스템의 날짜
+        Calendar bDate = Calendar.getInstance(); // 이것이 시스템의 날짜
         bDate.set(day2.getYear(), day2.getMonth()-1, day2.getDay());
 
         // 여기에 시,분,초를 0으로 세팅해야 before, after를 제대로 비교함
