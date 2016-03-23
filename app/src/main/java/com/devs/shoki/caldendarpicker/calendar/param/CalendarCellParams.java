@@ -1,4 +1,4 @@
-package com.devs.shoki.caldendarpicker.calendar;
+package com.devs.shoki.caldendarpicker.calendar.param;
 
 public class CalendarCellParams {
 

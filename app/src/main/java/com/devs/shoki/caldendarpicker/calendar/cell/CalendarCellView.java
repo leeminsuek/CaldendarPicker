@@ -1,4 +1,4 @@
-package com.devs.shoki.caldendarpicker.calendar.day;
+package com.devs.shoki.caldendarpicker.calendar.cell;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -9,8 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.devs.shoki.caldendarpicker.R;
-import com.devs.shoki.caldendarpicker.calendar.CalendarCellParams;
-import com.devs.shoki.caldendarpicker.calendar.CalendarPickerParams;
+import com.devs.shoki.caldendarpicker.calendar.param.CalendarCellParams;
+import com.devs.shoki.caldendarpicker.calendar.param.CalendarPickerParams;
 import com.devs.shoki.caldendarpicker.constants.CalendarMode;
 import com.devs.shoki.caldendarpicker.constants.Config;
 import com.devs.shoki.caldendarpicker.constants.MonthState;

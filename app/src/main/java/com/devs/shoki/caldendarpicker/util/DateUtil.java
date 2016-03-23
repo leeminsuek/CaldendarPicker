@@ -2,7 +2,7 @@ package com.devs.shoki.caldendarpicker.util;
 
 import android.util.Log;
 
-import com.devs.shoki.caldendarpicker.calendar.CalendarDayParams;
+import com.devs.shoki.caldendarpicker.calendar.param.CalendarDayParams;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

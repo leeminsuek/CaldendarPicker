@@ -4,11 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.devs.shoki.caldendarpicker.calendar.CalendarCellParams;
-import com.devs.shoki.caldendarpicker.calendar.CalendarDayParams;
-import com.devs.shoki.caldendarpicker.calendar.CalendarPickerParams;
-import com.devs.shoki.caldendarpicker.calendar.day.CalendarCellView;
-import com.devs.shoki.caldendarpicker.calendar.week.CalendarWeekView;
+import com.devs.shoki.caldendarpicker.calendar.param.CalendarCellParams;
+import com.devs.shoki.caldendarpicker.calendar.param.CalendarDayParams;
+import com.devs.shoki.caldendarpicker.calendar.param.CalendarPickerParams;
+import com.devs.shoki.caldendarpicker.calendar.cell.CalendarCellView;
+import com.devs.shoki.caldendarpicker.calendar.cell.CalendarWeekView;
 import com.devs.shoki.caldendarpicker.constants.Config;
 import com.devs.shoki.caldendarpicker.constants.Week;
 import com.devs.shoki.caldendarpicker.listener.IDayClickListener;

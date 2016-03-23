@@ -1,4 +1,4 @@
-package com.devs.shoki.caldendarpicker.calendar.week;
+package com.devs.shoki.caldendarpicker.calendar.cell;
 
 import android.content.Context;
 import android.view.View;

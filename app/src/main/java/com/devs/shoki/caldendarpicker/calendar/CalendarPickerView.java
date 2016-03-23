@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.devs.shoki.caldendarpicker.CalendarGridAdapter;
 import com.devs.shoki.caldendarpicker.CalendarPickerDialog;
 import com.devs.shoki.caldendarpicker.R;
+import com.devs.shoki.caldendarpicker.calendar.param.CalendarCellParams;
+import com.devs.shoki.caldendarpicker.calendar.param.CalendarDayParams;
+import com.devs.shoki.caldendarpicker.calendar.param.CalendarPickerParams;
 import com.devs.shoki.caldendarpicker.constants.CalendarMode;
 import com.devs.shoki.caldendarpicker.constants.Config;
 import com.devs.shoki.caldendarpicker.constants.MonthState;
@@ -53,6 +56,9 @@ public class CalendarPickerView extends RelativeLayout {
         init();
     }
 
+    /**
+     * 모드에 따른 이벤트/데이터 설정
+     */
     private void checkMode() {
         if (params.getMode().equals(CalendarMode.SELECT)) {
             params.setPickerFromToListener(null);
@@ -63,6 +69,9 @@ public class CalendarPickerView extends RelativeLayout {
         }
     }
 
+    /**
+     * 초기 날짜 설정
+     */
     private void setStartDate() {
         calendar = Calendar.getInstance();
 
@@ -77,6 +86,9 @@ public class CalendarPickerView extends RelativeLayout {
         }
     }
 
+    /**
+     * 초기화
+     */
     private void init() {
         View.inflate(getContext(), R.layout.picker_main, this);
 
@@ -122,6 +134,9 @@ public class CalendarPickerView extends RelativeLayout {
     }
 
 
+    /**
+     * 리사이클러뷰 초기화 및 이벤트 등록
+     */
     private void initRecyclerView() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 7, LinearLayoutManager.VERTICAL, false);
 
@@ -133,18 +148,16 @@ public class CalendarPickerView extends RelativeLayout {
                 if (params.getMode().equals(CalendarMode.FROM_TO)) {
                     if (selectParamsMap.containsKey(Config.SELECT_START_DATE)) {
                         int diff = DateUtil.isDifferenceOfDay(selectParamsMap.get(Config.SELECT_START_DATE), day);
-                        Log.d("calendar", "diff = "+ diff);
-                        if(diff == -1) {
-                            if(selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
+                        Log.d("calendar", "diff = " + diff);
+                        if (diff == -1) {
+                            if (selectParamsMap.containsKey(Config.SELECT_END_DATE)) {
                                 selectParamsMap.put(Config.SELECT_START_DATE, day);
-                            }
-                            else {
+                            } else {
                                 selectParamsMap.put(Config.SELECT_END_DATE, selectParamsMap.get(Config.SELECT_START_DATE));
                                 selectParamsMap.put(Config.SELECT_START_DATE, day);
                             }
 
-                        }
-                        else {
+                        } else {
                             selectParamsMap.put(Config.SELECT_END_DATE, day);
                         }
                     } else {
@@ -197,7 +210,7 @@ public class CalendarPickerView extends RelativeLayout {
                     }
                 } else {
                     if (position - 7 >= 0) {
-                        for(CalendarCellParams params : cellParamsList) {
+                        for (CalendarCellParams params : cellParamsList) {
                             params.setSelected(false);
                         }
                         cellParamsList.get(position - 7).setSelected(true);
