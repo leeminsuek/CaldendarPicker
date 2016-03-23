@@ -22,6 +22,7 @@ import com.devs.shoki.caldendarpicker.constants.MonthState;
 import com.devs.shoki.caldendarpicker.listener.IDayClickListener;
 import com.devs.shoki.caldendarpicker.util.DateUtil;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -284,7 +285,11 @@ public class CalendarPickerView extends RelativeLayout {
                     calendarDayParams.setDay(Integer.parseInt(day));
                     calendarDayParams.setMonth(Integer.parseInt(beforeYearMonthBy.substring(4, 6)));
                     calendarDayParams.setYear(Integer.parseInt(beforeYearMonthBy.substring(0, 4)));
-
+                    try {
+                        calendarDayParams.setWeek(DateUtil.isWeekend(calendarDayParams));
+                    } catch (ParseException e) {
+                        calendarDayParams.setWeek(false);
+                    }
                     beforeParams.setDayParams(calendarDayParams);
                     cellParamsList.add(0, beforeParams);
                 }
@@ -293,6 +298,11 @@ public class CalendarPickerView extends RelativeLayout {
             calendarDayParams.setDay(i);
             calendarDayParams.setMonth(month);
             calendarDayParams.setYear(year);
+            try {
+                calendarDayParams.setWeek(DateUtil.isWeekend(calendarDayParams));
+            } catch (ParseException e) {
+                calendarDayParams.setWeek(false);
+            }
             params.setDayParams(calendarDayParams);
             params.setMonthState(MonthState.NOW);
             cellParamsList.add(params);
@@ -309,6 +319,11 @@ public class CalendarPickerView extends RelativeLayout {
             calendarDayParams.setDay(i);
             calendarDayParams.setMonth(copy.get(Calendar.MONTH));
             calendarDayParams.setYear(copy.get(Calendar.YEAR));
+            try {
+                calendarDayParams.setWeek(DateUtil.isWeekend(calendarDayParams));
+            } catch (ParseException e) {
+                calendarDayParams.setWeek(false);
+            }
             params.setDayParams(calendarDayParams);
             cellParamsList.add(params);
         }

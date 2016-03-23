@@ -7,6 +7,18 @@ public class CalendarDayParams {
     private int day;
     private int month;
     private int year;
+    /**
+     * 공휴일/주말 구분
+     */
+    private boolean week = false;
+
+    public boolean isWeek() {
+        return week;
+    }
+
+    public void setWeek(boolean week) {
+        this.week = week;
+    }
 
     public int getDay() {
         return day;

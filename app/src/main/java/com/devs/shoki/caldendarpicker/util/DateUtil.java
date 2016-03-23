@@ -131,6 +131,21 @@ public class DateUtil {
             Log.d("diff",  day1.getMonth() + "월" + day1.getDay() + "일 ////" +day2.getMonth() + "월" + day2.getDay() + "일 //// 같네!");
             return 0;
         }
+    }
 
+    /**
+     * 주말 확인
+     * @param dayParams
+     * @return
+     * @throws ParseException
+     */
+    public static boolean isWeekend(CalendarDayParams dayParams) throws ParseException {
+        Calendar cal = Calendar.getInstance();
+        cal.set(dayParams.getYear(), dayParams.getMonth()-1, dayParams.getDay());
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY;
     }
 }
