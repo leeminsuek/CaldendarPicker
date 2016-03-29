@@ -1,18 +1,19 @@
-package com.devs.shoki.caldendarpicker;
+package com.devs.shoki.calendarpicker;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.devs.shoki.caldendarpicker.calendar.param.CalendarCellParams;
-import com.devs.shoki.caldendarpicker.calendar.param.CalendarDayParams;
-import com.devs.shoki.caldendarpicker.calendar.param.CalendarPickerParams;
-import com.devs.shoki.caldendarpicker.calendar.cell.CalendarCellView;
-import com.devs.shoki.caldendarpicker.calendar.cell.CalendarWeekView;
-import com.devs.shoki.caldendarpicker.constants.Config;
-import com.devs.shoki.caldendarpicker.constants.Week;
-import com.devs.shoki.caldendarpicker.listener.IDayClickListener;
-import com.devs.shoki.caldendarpicker.util.DateUtil;
+import com.devs.shoki.caldendarpicker.R;
+import com.devs.shoki.calendarpicker.calendar.param.CalendarCellParams;
+import com.devs.shoki.calendarpicker.calendar.param.CalendarDayParams;
+import com.devs.shoki.calendarpicker.calendar.param.CalendarPickerParams;
+import com.devs.shoki.calendarpicker.calendar.cell.CalendarCellView;
+import com.devs.shoki.calendarpicker.calendar.cell.CalendarWeekView;
+import com.devs.shoki.calendarpicker.constants.Config;
+import com.devs.shoki.calendarpicker.constants.Week;
+import com.devs.shoki.calendarpicker.listener.IDayClickListener;
+import com.devs.shoki.calendarpicker.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;

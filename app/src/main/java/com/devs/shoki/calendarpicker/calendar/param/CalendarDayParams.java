@@ -1,4 +1,4 @@
-package com.devs.shoki.caldendarpicker.calendar.param;
+package com.devs.shoki.calendarpicker.calendar.param;
 
 /**
  * Created by shoki on 2016-03-21.

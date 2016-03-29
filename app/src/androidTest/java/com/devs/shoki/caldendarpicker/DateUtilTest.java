@@ -1,7 +1,7 @@
 package com.devs.shoki.caldendarpicker;
 
-import com.devs.shoki.caldendarpicker.calendar.param.CalendarDayParams;
-import com.devs.shoki.caldendarpicker.util.DateUtil;
+import com.devs.shoki.calendarpicker.calendar.param.CalendarDayParams;
+import com.devs.shoki.calendarpicker.util.DateUtil;
 
 import junit.framework.TestCase;
 

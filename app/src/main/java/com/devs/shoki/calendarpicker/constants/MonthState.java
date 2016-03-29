@@ -1,4 +1,4 @@
-package com.devs.shoki.caldendarpicker.constants;
+package com.devs.shoki.calendarpicker.constants;
 
 /**
  * Created by shoki on 2016-03-18.

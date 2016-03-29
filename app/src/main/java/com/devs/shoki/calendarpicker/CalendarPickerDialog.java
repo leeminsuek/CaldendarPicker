@@ -1,4 +1,4 @@
-package com.devs.shoki.caldendarpicker;
+package com.devs.shoki.calendarpicker;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -6,12 +6,13 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
-import com.devs.shoki.caldendarpicker.calendar.CalendarPickerView;
-import com.devs.shoki.caldendarpicker.calendar.param.CalendarDayParams;
-import com.devs.shoki.caldendarpicker.calendar.param.CalendarPickerParams;
-import com.devs.shoki.caldendarpicker.constants.CalendarMode;
-import com.devs.shoki.caldendarpicker.listener.IPickerFromToListener;
-import com.devs.shoki.caldendarpicker.listener.IPickerListener;
+import com.devs.shoki.caldendarpicker.R;
+import com.devs.shoki.calendarpicker.calendar.CalendarPickerView;
+import com.devs.shoki.calendarpicker.calendar.param.CalendarDayParams;
+import com.devs.shoki.calendarpicker.calendar.param.CalendarPickerParams;
+import com.devs.shoki.calendarpicker.constants.CalendarMode;
+import com.devs.shoki.calendarpicker.listener.IPickerFromToListener;
+import com.devs.shoki.calendarpicker.listener.IPickerListener;
 
 /**
  * Created by shoki on 2016-03-18.
@@ -66,6 +67,13 @@ public class CalendarPickerDialog extends AlertDialog {
             return this;
         }
 
+        /**
+         * 테스트 한글
+         * @param year 년
+         * @param month 월
+         * @param day 일
+         * @return 빌드
+         */
         public Builder setLastDate(int year, int month, int day) {
             CalendarDayParams dayParams = new CalendarDayParams();
             dayParams.setYear(year);
@@ -126,7 +134,7 @@ public class CalendarPickerDialog extends AlertDialog {
 
         /**
          * 디폴트 설정 후 생성
-         * @return
+         * @return 빌드
          */
         public CalendarPickerDialog create() {
             if(calendarPickerParams.getSelectedDrawable() == null) {

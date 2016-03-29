@@ -1,4 +1,4 @@
-package com.devs.shoki.caldendarpicker.calendar;
+package com.devs.shoki.calendarpicker.calendar;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,17 +10,17 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.devs.shoki.caldendarpicker.CalendarGridAdapter;
-import com.devs.shoki.caldendarpicker.CalendarPickerDialog;
+import com.devs.shoki.calendarpicker.CalendarGridAdapter;
+import com.devs.shoki.calendarpicker.CalendarPickerDialog;
 import com.devs.shoki.caldendarpicker.R;
-import com.devs.shoki.caldendarpicker.calendar.param.CalendarCellParams;
-import com.devs.shoki.caldendarpicker.calendar.param.CalendarDayParams;
-import com.devs.shoki.caldendarpicker.calendar.param.CalendarPickerParams;
-import com.devs.shoki.caldendarpicker.constants.CalendarMode;
-import com.devs.shoki.caldendarpicker.constants.Config;
-import com.devs.shoki.caldendarpicker.constants.MonthState;
-import com.devs.shoki.caldendarpicker.listener.IDayClickListener;
-import com.devs.shoki.caldendarpicker.util.DateUtil;
+import com.devs.shoki.calendarpicker.calendar.param.CalendarCellParams;
+import com.devs.shoki.calendarpicker.calendar.param.CalendarDayParams;
+import com.devs.shoki.calendarpicker.calendar.param.CalendarPickerParams;
+import com.devs.shoki.calendarpicker.constants.CalendarMode;
+import com.devs.shoki.calendarpicker.constants.Config;
+import com.devs.shoki.calendarpicker.constants.MonthState;
+import com.devs.shoki.calendarpicker.listener.IDayClickListener;
+import com.devs.shoki.calendarpicker.util.DateUtil;
 
 import java.text.ParseException;
 import java.util.ArrayList;

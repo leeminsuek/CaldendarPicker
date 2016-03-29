@@ -1,10 +1,10 @@
-package com.devs.shoki.caldendarpicker.calendar.param;
+package com.devs.shoki.calendarpicker.calendar.param;
 
 import android.graphics.drawable.Drawable;
 
-import com.devs.shoki.caldendarpicker.constants.CalendarMode;
-import com.devs.shoki.caldendarpicker.listener.IPickerFromToListener;
-import com.devs.shoki.caldendarpicker.listener.IPickerListener;
+import com.devs.shoki.calendarpicker.constants.CalendarMode;
+import com.devs.shoki.calendarpicker.listener.IPickerFromToListener;
+import com.devs.shoki.calendarpicker.listener.IPickerListener;
 
 /**
  * Created by shoki on 2016-03-18.
