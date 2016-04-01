@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.devs.shoki.caldendarpicker.R;
+import com.devs.shoki.calendarpicker.R;
 import com.devs.shoki.calendarpicker.calendar.param.CalendarCellParams;
 import com.devs.shoki.calendarpicker.calendar.param.CalendarPickerParams;
 import com.devs.shoki.calendarpicker.constants.CalendarMode;

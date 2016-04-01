@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.devs.shoki.caldendarpicker.R;
+import com.devs.shoki.calendarpicker.R;
 import com.devs.shoki.calendarpicker.constants.Week;
 
 /**

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.devs.shoki.calendarpicker.CalendarGridAdapter;
 import com.devs.shoki.calendarpicker.CalendarPickerDialog;
-import com.devs.shoki.caldendarpicker.R;
+import com.devs.shoki.calendarpicker.R;
 import com.devs.shoki.calendarpicker.calendar.param.CalendarCellParams;
 import com.devs.shoki.calendarpicker.calendar.param.CalendarDayParams;
 import com.devs.shoki.calendarpicker.calendar.param.CalendarPickerParams;

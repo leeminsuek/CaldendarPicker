@@ -6,7 +6,6 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
-import com.devs.shoki.caldendarpicker.R;
 import com.devs.shoki.calendarpicker.calendar.CalendarPickerView;
 import com.devs.shoki.calendarpicker.calendar.param.CalendarDayParams;
 import com.devs.shoki.calendarpicker.calendar.param.CalendarPickerParams;

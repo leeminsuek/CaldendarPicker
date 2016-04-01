@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.devs.shoki.caldendarpicker.R;
 import com.devs.shoki.calendarpicker.calendar.param.CalendarDayParams;
 import com.devs.shoki.calendarpicker.constants.CalendarMode;
 import com.devs.shoki.calendarpicker.listener.IPickerFromToListener;
